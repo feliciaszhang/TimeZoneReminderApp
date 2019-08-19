@@ -43,10 +43,8 @@ export default class AddScreen extends React.Component {
       .then(json => {
         if (json.status === 'OK') {
           let copy = JSON.parse(JSON.stringify(this.state.timezoneList))
-          let tempTime = time.toLocaleString("en-US", {timeZone: timezoneName})
-          tempTime = new Date(tempTime)
           const seconds = json.gmtOffset
-          copy[locationName] = {locationName:locationName,timezoneName:timezoneName,gmtOffset:seconds/60/60,convertedTime:tempTime}
+          copy[locationName] = {locationName:locationName,timezoneName:timezoneName,gmtOffset:seconds/60/60,convertedTime:'',convertedDate:''}
           this.setState({timezoneList:copy,locationName:'',timezoneName:''})
         }
       })
@@ -60,6 +58,15 @@ export default class AddScreen extends React.Component {
   handleAdd = () => {
     const {name,time,timezoneList} = this.state;
     if (name !== '') {
+
+      {Object.values(timezoneList).map(timezone => {
+        let tempTime = time.toLocaleString("en-US", {timeZone: timezone.timezoneName})
+        tempTime = new Date(tempTime)
+        timezone.convertedTime = tempTime.toLocaleTimeString(),
+        timezone.convertedDate = tempTime.toLocaleDateString("en-US",{weekday:'short',year:'numeric',month:'short',day:'numeric'})
+      })}
+
+
       let copy = JSON.parse(JSON.stringify(this.state.data))
       const ID = uuidv1();
       copy[ID] = {
@@ -71,6 +78,7 @@ export default class AddScreen extends React.Component {
       }
       this.save(copy)
       this.setState({data:copy})
+      console.log(copy)
       this.navigate()
     }
   }

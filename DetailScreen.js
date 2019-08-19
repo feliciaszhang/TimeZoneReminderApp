@@ -55,8 +55,9 @@ export default class DetailScreen extends React.Component {
     return(
       <LinearGradient style={styles.container} colors={['#F2E4F9','#B0A3B6']}>
         <Text style={styles.name}>{selected.name}</Text>
-        <Text style={styles.text}>{selected.time}</Text>
+        <Text style={styles.text}>{selected.time.replace(/:\d\d /, ' ')}</Text>
         <Text style={styles.text}>{selected.date}</Text>
+        {Object.values(selected.timezoneList).map(timezone => <Text>{timezone.locationName} {timezone.convertedTime.replace(/:\d\d /, ' ')} {timezone.convertedDate}</Text>)}
         <TouchableOpacity onPressOut={this.deleteItem} style={{position:'absolute',right:32,bottom:32,}}>
           <Icon name='trash-2' size={40} color='rgba(154,145,158,1)' />
         </TouchableOpacity>
