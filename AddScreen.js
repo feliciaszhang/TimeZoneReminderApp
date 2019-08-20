@@ -66,7 +66,6 @@ export default class AddScreen extends React.Component {
         timezone.convertedDate = tempTime.toLocaleDateString("en-US",{weekday:'short',year:'numeric',month:'short',day:'numeric'})
       })}
 
-
       let copy = JSON.parse(JSON.stringify(this.state.data))
       const ID = uuidv1();
       copy[ID] = {
@@ -78,7 +77,6 @@ export default class AddScreen extends React.Component {
       }
       this.save(copy)
       this.setState({data:copy})
-      console.log(copy)
       this.navigate()
     }
   }

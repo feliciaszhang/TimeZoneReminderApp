@@ -54,10 +54,18 @@ export default class DetailScreen extends React.Component {
     }
     return(
       <LinearGradient style={styles.container} colors={['#F2E4F9','#B0A3B6']}>
-        <Text style={styles.name}>{selected.name}</Text>
-        <Text style={styles.text}>{selected.time.replace(/:\d\d /, ' ')}</Text>
-        <Text style={styles.text}>{selected.date}</Text>
-        {Object.values(selected.timezoneList).map(timezone => <Text>{timezone.locationName} {timezone.convertedTime.replace(/:\d\d /, ' ')} {timezone.convertedDate}</Text>)}
+        <View style={styles.card}>
+          {Object.values(selected.timezoneList).map(timezone =>
+            <View style={{flex:1}}>
+              <Text style={[styles.text,styles.locationText]}>{timezone.locationName}</Text>
+              <Text style={[styles.text,styles.timeText]}>{timezone.convertedTime.replace(/:\d\d /, ' ')}</Text>
+              <Text style={[styles.text,styles.dateText]}>{timezone.convertedDate.slice(4,-6)}</Text>
+            </View>
+          )}
+          <Text style={[styles.text,styles.locationText]}>Local</Text>
+          <Text style={[styles.text,styles.timeText]}>{selected.time.replace(/:\d\d /, ' ')}</Text>
+          <Text style={[styles.text,styles.dateText,{paddingBottom:30}]}>{selected.date.slice(4,-6)}</Text>
+        </View>
         <TouchableOpacity onPressOut={this.deleteItem} style={{position:'absolute',right:32,bottom:32,}}>
           <Icon name='trash-2' size={40} color='rgba(154,145,158,1)' />
         </TouchableOpacity>
@@ -75,6 +83,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 70,
   },
+  card: {
+    alginItems: 'center',
+    flex: 1,
+    paddingBottom: 70,
+    width: 370,
+  },
   name: {
     fontFamily: 'Avenir Next',
     fontSize: 35,
@@ -84,5 +98,20 @@ const styles = StyleSheet.create({
     fontFamily: 'Avenir Next',
     fontSize: 25,
     color: '#422E49',
+    alignItems: 'center',
+  },
+  locationText: {
+    color: 'rgba(154,145,158,1)',
+    textAlign: 'left',
+    marginBottom: 20,
+  },
+  timeText: {
+    fontSize: 45,
+    textAlign: 'center',
+  },
+  dateText: {
+    color: 'rgba(154,145,158,1)',
+    textAlign: 'center',
+    fontSize: 20,
   },
 })
