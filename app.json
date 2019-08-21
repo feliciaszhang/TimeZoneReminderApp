@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "WorldClock",
-    "slug": "WorldClock",
+    "name": "time-zone-converter-reminder-app",
+    "slug": "time-zone-converter-reminder-app",
     "privacy": "public",
     "sdkVersion": "33.0.0",
     "platforms": [
